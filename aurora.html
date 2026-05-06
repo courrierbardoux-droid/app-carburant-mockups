@@ -109,20 +109,21 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
 .pin{position:absolute;display:flex;flex-direction:column;align-items:center;cursor:pointer;animation:pin-pop .6s cubic-bezier(.34,1.56,.64,1) backwards}
 .pin:nth-child(odd){animation-delay:.1s}.pin:nth-child(even){animation-delay:.25s}
 @keyframes pin-pop{from{opacity:0;transform:translateY(20px) scale(.5)}to{opacity:1;transform:translateY(0) scale(1)}}
-.pin-dot{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(11,27,46,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:2px solid var(--gold);position:relative;box-shadow:0 8px 22px rgba(0,0,0,.4),0 0 0 0 rgba(255,212,42,.4);transition:all .35s}
-.pin-dot.green{border-color:var(--green);box-shadow:0 8px 22px rgba(0,0,0,.4),0 0 30px rgba(63,203,111,.25)}
-.pin-dot.red{border-color:var(--red);box-shadow:0 8px 22px rgba(0,0,0,.4),0 0 30px rgba(255,90,95,.25)}
-.pin-dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid currentColor;color:var(--gold);opacity:0;animation:pin-pulse 2.4s ease-out infinite}
-.pin-dot.green::after{color:var(--green)}.pin-dot.red::after{color:var(--red)}
-@keyframes pin-pulse{0%{opacity:.7;transform:scale(1)}100%{opacity:0;transform:scale(2)}}
-.pin-dot svg{width:22px;height:22px;transition:all .35s}
-.map.zoomed-out .pin-dot{width:30px;height:30px}
-.map.zoomed-out .pin-dot svg{width:14px;height:14px}
+.pin-dot{width:50px;height:50px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold) 0%,var(--gold-soft) 100%);position:relative;box-shadow:0 10px 24px rgba(255,212,42,.45),0 0 28px rgba(255,212,42,.20);transition:all .35s}
+.pin:active .pin-dot{transform:scale(.92)}
+.pin-dot.green{background:linear-gradient(135deg,var(--green) 0%,#2BA055 100%);box-shadow:0 10px 24px rgba(63,203,111,.45),0 0 28px rgba(63,203,111,.25)}
+.pin-dot.red{background:linear-gradient(135deg,var(--red) 0%,#D63B40 100%);box-shadow:0 10px 24px rgba(255,90,95,.45),0 0 28px rgba(255,90,95,.25)}
+.pin-dot::after{content:"";position:absolute;inset:-6px;border-radius:24px;background:inherit;opacity:.25;animation:pin-pulse 2s ease-out infinite;z-index:-1}
+@keyframes pin-pulse{0%{opacity:.35;transform:scale(1)}100%{opacity:0;transform:scale(1.5)}}
+.pin-dot svg{width:24px;height:24px;transition:all .35s;filter:drop-shadow(0 1px 2px rgba(0,0,0,.25))}
+.pin-dot svg path,.pin-dot svg rect,.pin-dot svg circle,.pin-dot svg line{stroke:#fff !important;stroke-width:2.4;stroke-linecap:round;fill:none}
+.map.zoomed-out .pin-dot{width:34px;height:34px;border-radius:12px}
+.map.zoomed-out .pin-dot svg{width:16px;height:16px}
 .map.zoomed-out .pin-tag{font-size:10px;padding:3px 7px}
 
-.pin-tag{margin-top:6px;padding:4px 10px;background:rgba(11,27,46,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:8px;font-size:11px;font-weight:600;white-space:nowrap;color:var(--gold);transition:all .35s}
-.pin-tag.green{color:var(--green)}
-.pin-tag.red{color:var(--red);text-decoration:line-through;text-decoration-color:rgba(255,90,95,.6)}
+.pin-tag{margin-top:6px;padding:5px 10px;background:var(--bg-mid);color:var(--gold);border-radius:10px;font-size:11px;font-weight:700;font-family:'DM Sans',sans-serif;box-shadow:0 4px 10px rgba(0,0,0,.4);white-space:nowrap;transition:all .35s;border:1px solid var(--border)}
+.pin-tag.green{background:#2BA055;color:#fff;border-color:transparent}
+.pin-tag.red{background:#D63B40;color:#fff;text-decoration:line-through;text-decoration-color:rgba(255,255,255,.6);border-color:transparent}
 
 .pin.close{opacity:1;transition:opacity .35s}
 .map.zoomed-out .pin.close{opacity:0;pointer-events:none}
