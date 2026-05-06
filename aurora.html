@@ -10,43 +10,27 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg-deep:#06101D;
-  --bg-mid:#0B1B2E;
-  --bg-soft:#13294A;
-  --gold:#FFD42A;
-  --gold-soft:#FFE470;
-  --aurora-1:#3DDDB8;
-  --aurora-2:#5B8DEF;
-  --aurora-3:#9F6EE8;
-  --green:#3FCB6F;
-  --red:#FF5A5F;
-  --glass:rgba(255,255,255,.06);
-  --glass-strong:rgba(255,255,255,.10);
-  --border:rgba(255,255,255,.10);
-  --text:#EAF2FF;
-  --text-soft:#9FB3CC;
+  --bg-deep:#06101D;--bg-mid:#0B1B2E;--bg-soft:#13294A;
+  --gold:#FFD42A;--gold-soft:#FFE470;
+  --aurora-1:#3DDDB8;--aurora-2:#5B8DEF;--aurora-3:#9F6EE8;
+  --green:#3FCB6F;--red:#FF5A5F;
+  --glass:rgba(255,255,255,.06);--glass-strong:rgba(255,255,255,.10);--border:rgba(255,255,255,.10);
+  --text:#EAF2FF;--text-soft:#9FB3CC;
+  --sheet-delay:2.5s;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden;background:var(--bg-deep);color:var(--text);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center}
-.frame{position:relative;width:100%;height:100%;max-width:430px;max-height:932px;background:var(--bg-mid);overflow:hidden;border-radius:0}
+.frame{position:relative;width:100%;height:100%;max-width:430px;max-height:932px;background:var(--bg-mid);overflow:hidden}
 @media(min-width:480px){.frame{border-radius:42px;box-shadow:0 60px 120px -20px rgba(0,0,0,.7),0 0 0 10px #000,0 0 0 11px #222}}
 
-/* Aurora background mesh */
 .aurora{position:absolute;inset:-20%;background:
   radial-gradient(60% 50% at 20% 30%,rgba(61,221,184,.35) 0%,transparent 60%),
   radial-gradient(50% 40% at 80% 20%,rgba(91,141,239,.30) 0%,transparent 60%),
   radial-gradient(70% 50% at 50% 80%,rgba(159,110,232,.25) 0%,transparent 60%),
   radial-gradient(40% 35% at 30% 90%,rgba(61,221,184,.18) 0%,transparent 60%);
-  filter:blur(40px);
-  animation:aurora-shift 18s ease-in-out infinite alternate;
-  z-index:0;pointer-events:none}
-@keyframes aurora-shift{
-  0%{transform:translate(0,0) scale(1);opacity:.9}
-  33%{transform:translate(4%,-3%) scale(1.05);opacity:1}
-  66%{transform:translate(-3%,4%) scale(.98);opacity:.85}
-  100%{transform:translate(2%,2%) scale(1.03);opacity:.95}
-}
+  filter:blur(40px);animation:aurora-shift 18s ease-in-out infinite alternate;z-index:0;pointer-events:none}
+@keyframes aurora-shift{0%{transform:translate(0,0) scale(1);opacity:.9}33%{transform:translate(4%,-3%) scale(1.05);opacity:1}66%{transform:translate(-3%,4%) scale(.98);opacity:.85}100%{transform:translate(2%,2%) scale(1.03);opacity:.95}}
 .stars{position:absolute;inset:0;background:
   radial-gradient(1px 1px at 20% 30%,rgba(255,255,255,.6) 50%,transparent),
   radial-gradient(1px 1px at 70% 18%,rgba(255,255,255,.4) 50%,transparent),
@@ -56,11 +40,19 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
   z-index:1;pointer-events:none;animation:twinkle 4s ease-in-out infinite alternate}
 @keyframes twinkle{from{opacity:.4}to{opacity:1}}
 
+.particles{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.particle{position:absolute;width:3px;height:3px;background:var(--gold);border-radius:50%;box-shadow:0 0 8px var(--gold);opacity:0;animation:rise 8s linear infinite}
+.particle:nth-child(1){left:10%;animation-delay:0s}
+.particle:nth-child(2){left:30%;animation-delay:1.5s}
+.particle:nth-child(3){left:55%;animation-delay:3s}
+.particle:nth-child(4){left:75%;animation-delay:4.5s}
+.particle:nth-child(5){left:90%;animation-delay:6s}
+@keyframes rise{0%{transform:translateY(110vh) scale(.5);opacity:0}10%{opacity:.6}90%{opacity:.6}100%{transform:translateY(-10vh) scale(1.2);opacity:0}}
+
 .screens{position:relative;width:100%;height:100%;z-index:2}
 .screen{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateX(20px);transition:opacity .35s ease,transform .35s ease,visibility .35s}
 .screen.active{opacity:1;visibility:visible;transform:translateX(0)}
 
-/* Top bar */
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 22px 12px;padding-top:max(18px,env(safe-area-inset-top));z-index:3;position:relative}
 .brand{display:flex;align-items:center;gap:10px}
 .logo-wrap{width:36px;height:36px;display:grid;place-items:center;position:relative}
@@ -70,57 +62,87 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
 @keyframes logo-bob{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 .brand-name{font-family:'DM Sans',sans-serif;font-weight:900;font-size:18px;letter-spacing:-.01em}
 .brand-name span{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-soft) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.icon-btn{width:40px;height:40px;border-radius:50%;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);display:grid;place-items:center;cursor:pointer;transition:transform .2s,background .2s}
+.icon-btn{width:40px;height:40px;border-radius:50%;background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--border);display:grid;place-items:center;cursor:pointer;transition:transform .2s,background .2s}
 .icon-btn:active{transform:scale(.92);background:var(--glass-strong)}
 .icon-btn svg{width:18px;height:18px;stroke:var(--text);fill:none;stroke-width:2}
 
-/* Map mock */
+.chips{position:absolute;top:90px;left:0;right:0;display:flex;gap:8px;padding:0 18px;overflow-x:auto;scrollbar-width:none;z-index:6}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;padding:8px 14px;background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:100px;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+.chip.active{background:var(--gold);color:#0B1B2E;border-color:var(--gold);font-weight:700}
+.chip:active{transform:scale(.95)}
+
+/* Zoom toggle */
+.zoom-toggle{position:absolute;top:140px;right:18px;background:rgba(11,27,46,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:14px;display:flex;flex-direction:column;overflow:hidden;z-index:8;box-shadow:0 8px 22px rgba(0,0,0,.4)}
+.zoom-btn{width:44px;height:44px;display:grid;place-items:center;color:var(--text);cursor:pointer;background:transparent;border:none;font-size:18px;font-weight:600;font-family:'Inter',sans-serif;transition:background .15s}
+.zoom-btn:not(:last-child){border-bottom:1px solid var(--border)}
+.zoom-btn:active{background:var(--glass-strong)}
+.zoom-btn.active{background:var(--gold);color:#0B1B2E;font-weight:800}
+.zoom-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4}
+
+.scale{position:absolute;bottom:280px;left:18px;background:rgba(11,27,46,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:5px 10px;border-radius:6px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:11px;color:var(--text);z-index:8;border:1px solid var(--border);display:flex;align-items:center;gap:8px;transition:all .35s}
+.scale-bar{display:inline-block;width:38px;height:3px;background:var(--text);border-radius:2px;position:relative}
+.scale-bar::before,.scale-bar::after{content:"";position:absolute;width:1.5px;height:7px;background:var(--text);top:-2px}
+.scale-bar::before{left:0}.scale-bar::after{right:0}
+
 .map{flex:1;position:relative;overflow:hidden}
 .map-grid{position:absolute;inset:0;background-image:
   linear-gradient(rgba(91,141,239,.08) 1px,transparent 1px),
   linear-gradient(90deg,rgba(91,141,239,.08) 1px,transparent 1px);
-  background-size:48px 48px;animation:grid-drift 25s linear infinite}
+  background-size:48px 48px;animation:grid-drift 25s linear infinite;transition:background-size .35s}
+.map.zoomed-out .map-grid{background-size:24px 24px}
 @keyframes grid-drift{from{background-position:0 0}to{background-position:48px 48px}}
+
 .road{position:absolute;background:linear-gradient(90deg,transparent,rgba(255,255,255,.10) 30%,rgba(255,255,255,.10) 70%,transparent);height:38px;border-radius:20px;border:1px solid rgba(255,255,255,.04)}
 .road.r1{top:30%;left:-10%;right:-10%;transform:rotate(-3deg)}
 .road.r2{top:62%;left:-10%;right:-10%;transform:rotate(2deg)}
 .road.r3{top:18%;bottom:18%;width:50px;left:62%;transform:rotate(78deg)}
 
+.road-sec{opacity:0;transition:opacity .35s;height:18px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06) 30%,rgba(255,255,255,.06) 70%,transparent);border-radius:12px;position:absolute}
+.map.zoomed-out .road-sec{opacity:1}
+.road-sec.s1{top:14%;left:-10%;right:-10%;transform:rotate(-1deg)}
+.road-sec.s2{top:46%;left:-10%;right:-10%;transform:rotate(4deg)}
+.road-sec.s3{top:78%;left:-10%;right:-10%;transform:rotate(-2deg)}
+.road-sec.s4{top:6%;bottom:6%;width:24px;left:30%;transform:rotate(80deg)}
+.road-sec.s5{top:6%;bottom:6%;width:24px;left:88%;transform:rotate(74deg)}
+
 .pin{position:absolute;display:flex;flex-direction:column;align-items:center;cursor:pointer;animation:pin-pop .6s cubic-bezier(.34,1.56,.64,1) backwards}
-.pin:nth-child(1){animation-delay:.1s}
-.pin:nth-child(2){animation-delay:.25s}
-.pin:nth-child(3){animation-delay:.4s}
-.pin:nth-child(4){animation-delay:.55s}
+.pin:nth-child(odd){animation-delay:.1s}.pin:nth-child(even){animation-delay:.25s}
 @keyframes pin-pop{from{opacity:0;transform:translateY(20px) scale(.5)}to{opacity:1;transform:translateY(0) scale(1)}}
-.pin-dot{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(11,27,46,.85);backdrop-filter:blur(8px);border:2px solid var(--gold);position:relative;box-shadow:0 8px 22px rgba(0,0,0,.4),0 0 0 0 rgba(255,212,42,.4)}
+.pin-dot{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(11,27,46,.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:2px solid var(--gold);position:relative;box-shadow:0 8px 22px rgba(0,0,0,.4),0 0 0 0 rgba(255,212,42,.4);transition:all .35s}
 .pin-dot.green{border-color:var(--green);box-shadow:0 8px 22px rgba(0,0,0,.4),0 0 30px rgba(63,203,111,.25)}
 .pin-dot.red{border-color:var(--red);box-shadow:0 8px 22px rgba(0,0,0,.4),0 0 30px rgba(255,90,95,.25)}
 .pin-dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid currentColor;color:var(--gold);opacity:0;animation:pin-pulse 2.4s ease-out infinite}
-.pin-dot.green::after{color:var(--green)}
-.pin-dot.red::after{color:var(--red)}
+.pin-dot.green::after{color:var(--green)}.pin-dot.red::after{color:var(--red)}
 @keyframes pin-pulse{0%{opacity:.7;transform:scale(1)}100%{opacity:0;transform:scale(2)}}
-.pin-dot svg{width:22px;height:22px}
-.pin-tag{margin-top:6px;padding:4px 10px;background:rgba(11,27,46,.92);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:8px;font-size:11px;font-weight:600;white-space:nowrap;color:var(--gold)}
+.pin-dot svg{width:22px;height:22px;transition:all .35s}
+.map.zoomed-out .pin-dot{width:30px;height:30px}
+.map.zoomed-out .pin-dot svg{width:14px;height:14px}
+.map.zoomed-out .pin-tag{font-size:10px;padding:3px 7px}
+
+.pin-tag{margin-top:6px;padding:4px 10px;background:rgba(11,27,46,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:8px;font-size:11px;font-weight:600;white-space:nowrap;color:var(--gold);transition:all .35s}
 .pin-tag.green{color:var(--green)}
 .pin-tag.red{color:var(--red);text-decoration:line-through;text-decoration-color:rgba(255,90,95,.6)}
-.pin.p1{top:28%;left:18%}
-.pin.p2{top:48%;left:55%}
-.pin.p3{top:68%;left:25%}
-.pin.p4{top:38%;right:14%}
+
+.pin.close{opacity:1;transition:opacity .35s}
+.map.zoomed-out .pin.close{opacity:0;pointer-events:none}
+.pin.close.p1{top:30%;left:18%}
+.pin.close.p2{top:48%;left:55%}
+.pin.close.p3{top:68%;left:25%}
+.pin.close.p4{top:38%;right:14%}
+
+.pin.far{opacity:0;pointer-events:none;transition:opacity .35s}
+.map.zoomed-out .pin.far{opacity:1;pointer-events:auto}
+.pin.far.f1{top:18%;left:12%}.pin.far.f2{top:24%;left:42%}.pin.far.f3{top:32%;right:18%}
+.pin.far.f4{top:42%;left:8%}.pin.far.f5{top:46%;left:36%}.pin.far.f6{top:50%;right:30%}
+.pin.far.f7{top:58%;left:22%}.pin.far.f8{top:62%;right:12%}.pin.far.f9{top:72%;left:14%}
+.pin.far.f10{top:76%;left:46%}.pin.far.f11{top:80%;right:24%}.pin.far.f12{top:14%;right:38%}
 
 .user-loc{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:18px;height:18px;border-radius:50%;background:#5B8DEF;border:3px solid #fff;box-shadow:0 0 0 6px rgba(91,141,239,.25),0 0 30px rgba(91,141,239,.5);z-index:5}
 .user-loc::after{content:"";position:absolute;inset:-12px;border-radius:50%;border:2px solid #5B8DEF;animation:user-pulse 2s ease-out infinite;opacity:0}
 @keyframes user-pulse{0%{opacity:.6;transform:scale(1)}100%{opacity:0;transform:scale(2)}}
 
-/* Filters chips bar */
-.chips{position:absolute;top:90px;left:0;right:0;display:flex;gap:8px;padding:0 18px;overflow-x:auto;scrollbar-width:none;z-index:6}
-.chips::-webkit-scrollbar{display:none}
-.chip{flex-shrink:0;padding:8px 14px;background:var(--glass);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:100px;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
-.chip.active{background:var(--gold);color:#0B1B2E;border-color:var(--gold);font-weight:700}
-.chip:active{transform:scale(.95)}
-
-/* Bottom sheet card */
-.sheet{position:absolute;left:14px;right:14px;bottom:max(18px,env(safe-area-inset-bottom));background:linear-gradient(160deg,rgba(255,255,255,.08) 0%,rgba(255,255,255,.04) 100%);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border:1px solid var(--border);border-radius:28px;padding:18px 18px 16px;box-shadow:0 -10px 40px rgba(0,0,0,.4);z-index:7;animation:sheet-up .5s cubic-bezier(.16,1,.3,1) backwards;animation-delay:.5s}
+.sheet{position:absolute;left:14px;right:14px;bottom:max(18px,env(safe-area-inset-bottom));background:linear-gradient(160deg,rgba(255,255,255,.08) 0%,rgba(255,255,255,.04) 100%);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border:1px solid var(--border);border-radius:28px;padding:18px 18px 16px;box-shadow:0 -10px 40px rgba(0,0,0,.4);z-index:7;animation:sheet-up .5s cubic-bezier(.16,1,.3,1) backwards;animation-delay:var(--sheet-delay)}
 @keyframes sheet-up{from{transform:translateY(120%)}to{transform:translateY(0)}}
 .sheet-handle{width:40px;height:4px;background:rgba(255,255,255,.25);border-radius:2px;margin:0 auto 12px}
 .sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
@@ -146,15 +168,8 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
 .btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2}
 .btn.primary{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-soft) 100%);color:#0B1B2E;box-shadow:0 10px 30px -8px rgba(255,212,42,.5),inset 0 1px 0 rgba(255,255,255,.4);font-weight:700;animation:btn-glow 3s ease-in-out infinite}
 @keyframes btn-glow{0%,100%{box-shadow:0 10px 30px -8px rgba(255,212,42,.5),inset 0 1px 0 rgba(255,255,255,.4)}50%{box-shadow:0 14px 40px -6px rgba(255,212,42,.7),inset 0 1px 0 rgba(255,255,255,.4)}}
-.btn.ghost{background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);color:var(--text)}
+.btn.ghost{background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--border);color:var(--text)}
 
-/* Tab bar */
-.tabbar{position:absolute;left:14px;right:14px;bottom:max(18px,env(safe-area-inset-bottom));background:rgba(11,27,46,.7);backdrop-filter:blur(20px) saturate(180%);border:1px solid var(--border);border-radius:24px;padding:10px;display:flex;justify-content:space-around;z-index:6;display:none}
-.tab{flex:1;padding:10px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;border-radius:16px;transition:all .2s;color:var(--text-soft);font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
-.tab.active{background:var(--glass-strong);color:var(--gold)}
-.tab svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2}
-
-/* Detail screen */
 #screen-detail .topbar{padding-top:max(18px,env(safe-area-inset-top))}
 .back-btn{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:var(--text-soft);cursor:pointer;padding:10px 0}
 .back-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2}
@@ -178,22 +193,10 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
 .cta-row{display:grid;grid-template-columns:1fr;gap:10px;margin-top:24px}
 .cta-row .btn{padding:18px;font-size:15px}
 
-/* Toast */
-.toast{position:fixed;bottom:120px;left:50%;transform:translate(-50%,40px);background:rgba(11,27,46,.95);backdrop-filter:blur(20px);border:1px solid var(--gold);color:var(--gold);padding:12px 20px;border-radius:14px;font-weight:600;font-size:13px;opacity:0;pointer-events:none;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .25s;z-index:99;display:flex;align-items:center;gap:8px}
+.toast{position:fixed;bottom:120px;left:50%;transform:translate(-50%,40px);background:rgba(11,27,46,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--gold);color:var(--gold);padding:12px 20px;border-radius:14px;font-weight:600;font-size:13px;opacity:0;pointer-events:none;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .25s;z-index:99;display:flex;align-items:center;gap:8px}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 .toast svg{width:16px;height:16px}
 
-/* Particles */
-.particles{position:absolute;inset:0;pointer-events:none;z-index:1}
-.particle{position:absolute;width:3px;height:3px;background:var(--gold);border-radius:50%;box-shadow:0 0 8px var(--gold);opacity:0;animation:rise 8s linear infinite}
-.particle:nth-child(1){left:10%;animation-delay:0s}
-.particle:nth-child(2){left:30%;animation-delay:1.5s}
-.particle:nth-child(3){left:55%;animation-delay:3s}
-.particle:nth-child(4){left:75%;animation-delay:4.5s}
-.particle:nth-child(5){left:90%;animation-delay:6s}
-@keyframes rise{0%{transform:translateY(110vh) scale(.5);opacity:0}10%{opacity:.6}90%{opacity:.6}100%{transform:translateY(-10vh) scale(1.2);opacity:0}}
-
-/* Direction label */
 .dir-label{position:absolute;top:max(8px,env(safe-area-inset-top));right:8px;background:linear-gradient(135deg,var(--aurora-1),var(--aurora-2));color:#06101D;padding:5px 10px;border-radius:100px;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;z-index:99;font-family:'DM Sans',sans-serif;box-shadow:0 4px 12px rgba(0,0,0,.4)}
 </style>
 </head>
@@ -206,22 +209,14 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
   </div>
 
   <div class="screens">
-
-    <!-- ========== ÉCRAN 1 — MAP ========== -->
     <section id="screen-map" class="screen active">
       <div class="topbar">
         <div class="brand">
           <div class="logo-wrap">
             <svg class="logo" viewBox="0 0 64 64">
               <defs>
-                <linearGradient id="lgrad-a" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#FFD42A"/>
-                  <stop offset="1" stop-color="#FFE470"/>
-                </linearGradient>
-                <radialGradient id="lglow-a" cx=".5" cy=".5" r=".55">
-                  <stop offset="0" stop-color="#FFD42A" stop-opacity=".5"/>
-                  <stop offset="1" stop-color="#FFD42A" stop-opacity="0"/>
-                </radialGradient>
+                <linearGradient id="lgrad-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFD42A"/><stop offset="1" stop-color="#FFE470"/></linearGradient>
+                <radialGradient id="lglow-a" cx=".5" cy=".5" r=".55"><stop offset="0" stop-color="#FFD42A" stop-opacity=".5"/><stop offset="1" stop-color="#FFD42A" stop-opacity="0"/></radialGradient>
               </defs>
               <circle cx="32" cy="32" r="30" fill="url(#lglow-a)"/>
               <path d="M22 14 H38 A6 6 0 0 1 44 20 V46 A6 6 0 0 1 38 52 H22 A6 6 0 0 1 16 46 V20 A6 6 0 0 1 22 14 Z" fill="url(#lgrad-a)"/>
@@ -246,28 +241,56 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
         <div class="chip" onclick="setChip(this)">GPL</div>
       </div>
 
-      <div class="map">
+      <div class="zoom-toggle">
+        <button class="zoom-btn active" id="zoom-close-btn" onclick="setZoom('close')">
+          <svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><path d="M21 21l-5-5"/><path d="M11 8v6M8 11h6"/></svg>
+        </button>
+        <button class="zoom-btn" id="zoom-far-btn" onclick="setZoom('far')">
+          <svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><path d="M21 21l-5-5"/><path d="M8 11h6"/></svg>
+        </button>
+      </div>
+
+      <div class="scale" id="scale-indicator">
+        <span class="scale-bar"></span>
+        <span id="scale-text">2 km</span>
+      </div>
+
+      <div class="map" id="map">
         <div class="map-grid"></div>
-        <div class="road r1"></div>
-        <div class="road r2"></div>
-        <div class="road r3"></div>
+        <div class="road-sec s1"></div><div class="road-sec s2"></div><div class="road-sec s3"></div>
+        <div class="road-sec s4"></div><div class="road-sec s5"></div>
+        <div class="road r1"></div><div class="road r2"></div><div class="road r3"></div>
         <div class="user-loc"></div>
-        <div class="pin p1" onclick="goDetail()">
+
+        <div class="pin close p1" onclick="goDetail()">
           <div class="pin-dot green"><svg viewBox="0 0 24 24" fill="none" stroke="#3FCB6F" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div>
           <div class="pin-tag green">1,72€</div>
         </div>
-        <div class="pin p2">
+        <div class="pin close p2">
           <div class="pin-dot"><svg viewBox="0 0 24 24" fill="none" stroke="#FFD42A" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div>
           <div class="pin-tag">1,79€</div>
         </div>
-        <div class="pin p3">
+        <div class="pin close p3">
           <div class="pin-dot red"><svg viewBox="0 0 24 24" fill="none" stroke="#FF5A5F" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div>
           <div class="pin-tag red">rupture</div>
         </div>
-        <div class="pin p4">
+        <div class="pin close p4">
           <div class="pin-dot green"><svg viewBox="0 0 24 24" fill="none" stroke="#3FCB6F" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div>
           <div class="pin-tag green">1,75€</div>
         </div>
+
+        <div class="pin far f1" onclick="goDetail()"><div class="pin-dot green"><svg viewBox="0 0 24 24" fill="none" stroke="#3FCB6F" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div><div class="pin-tag green">1,69€</div></div>
+        <div class="pin far f2"><div class="pin-dot green"><svg viewBox="0 0 24 24" fill="none" stroke="#3FCB6F" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div><div class="pin-tag green">1,72€</div></div>
+        <div class="pin far f3"><div class="pin-dot green"><svg viewBox="0 0 24 24" fill="none" stroke="#3FCB6F" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div><div class="pin-tag green">1,75€</div></div>
+        <div class="pin far f4"><div class="pin-dot"><svg viewBox="0 0 24 24" fill="none" stroke="#FFD42A" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div><div class="pin-tag">1,77€</div></div>
+        <div class="pin far f5"><div class="pin-dot"><svg viewBox="0 0 24 24" fill="none" stroke="#FFD42A" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div><div class="pin-tag">1,79€</div></div>
+        <div class="pin far f6"><div class="pin-dot green"><svg viewBox="0 0 24 24" fill="none" stroke="#3FCB6F" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div><div class="pin-tag green">1,71€</div></div>
+        <div class="pin far f7"><div class="pin-dot green"><svg viewBox="0 0 24 24" fill="none" stroke="#3FCB6F" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div><div class="pin-tag green">1,68€</div></div>
+        <div class="pin far f8"><div class="pin-dot red"><svg viewBox="0 0 24 24" fill="none" stroke="#FF5A5F" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div><div class="pin-tag red">rupture</div></div>
+        <div class="pin far f9"><div class="pin-dot green"><svg viewBox="0 0 24 24" fill="none" stroke="#3FCB6F" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div><div class="pin-tag green">1,66€</div></div>
+        <div class="pin far f10"><div class="pin-dot"><svg viewBox="0 0 24 24" fill="none" stroke="#FFD42A" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div><div class="pin-tag">1,78€</div></div>
+        <div class="pin far f11"><div class="pin-dot green"><svg viewBox="0 0 24 24" fill="none" stroke="#3FCB6F" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div><div class="pin-tag green">1,73€</div></div>
+        <div class="pin far f12"><div class="pin-dot"><svg viewBox="0 0 24 24" fill="none" stroke="#FFD42A" stroke-width="2"><path d="M5 5h10v10H5zM15 9h3l3 3v4h-1"/></svg></div><div class="pin-tag">1,76€</div></div>
       </div>
 
       <div class="sheet">
@@ -287,29 +310,24 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
         </div>
         <div class="actions">
           <button class="btn ghost" onclick="goDetail()">
-            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-            Détails
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>Détails
           </button>
           <button class="btn primary" onclick="onYAller()">
-            <svg viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>
-            Y aller
+            <svg viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>Y aller
           </button>
         </div>
       </div>
     </section>
 
-    <!-- ========== ÉCRAN 2 — DETAIL STATION ========== -->
     <section id="screen-detail" class="screen">
       <div class="topbar">
         <div class="back-btn" onclick="goMap()">
-          <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-          Carte
+          <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Carte
         </div>
         <div class="icon-btn" onclick="toast('Ajouté aux favoris')">
           <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M19 14c1.5-1.5 3-4 3-6.5a4.5 4.5 0 0 0-9 0A4.5 4.5 0 0 0 4 7.5C4 10 5.5 12.5 7 14l5 5 7-5z"/></svg>
         </div>
       </div>
-
       <div class="detail-body">
         <div class="detail-hero">
           <h1>Total Châtellerault Sud</h1>
@@ -318,7 +336,6 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
             14 av. de Bordeaux · 86100 · 2,1 km
           </div>
         </div>
-
         <div class="section-title">Prix carburants</div>
         <div class="detail-prices">
           <div class="dp"><div class="dp-row"><span class="dp-label">SP95</span><span class="dp-val">1,72€</span></div><div class="delta">−3 cts vs moyenne</div></div>
@@ -326,7 +343,6 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
           <div class="dp"><div class="dp-row"><span class="dp-label">Gazole</span><span class="dp-val">1,68€</span></div><div class="delta">−4 cts</div></div>
           <div class="dp rupture"><div class="dp-row"><span class="dp-label">E85</span><span class="dp-val">1,02€</span></div><div class="delta">en rupture · 2 j</div></div>
         </div>
-
         <div class="section-title">Services & paiement</div>
         <div class="services">
           <div class="service"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>CB</div>
@@ -335,29 +351,24 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
           <div class="service"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg>Lavage</div>
           <div class="service"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>24h/24</div>
         </div>
-
         <div class="section-title">Crowdsourcing — temps réel</div>
         <div class="queue-bar">
           <div class="queue-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
           <div class="queue-text"><b>Pas de queue · pompes OK</b><small>2 utilisateurs il y a 8 minutes</small></div>
         </div>
-
         <div class="cta-row">
           <button class="btn primary" onclick="onYAller()">
-            <svg viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>
-            Y aller — itinéraire Waze ou Google Maps
+            <svg viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>Y aller — itinéraire Waze ou Google Maps
           </button>
           <button class="btn ghost" onclick="onSignal()">
-            <svg viewBox="0 0 24 24"><path d="M12 2v6m0 8v6m10-10h-6M8 12H2"/></svg>
-            Signaler une queue ou rupture
+            <svg viewBox="0 0 24 24"><path d="M12 2v6m0 8v6m10-10h-6M8 12H2"/></svg>Signaler une queue ou rupture
           </button>
         </div>
       </div>
     </section>
-
   </div>
 
-  <div class="dir-label">Aurora · Direction 1/3</div>
+  <div class="dir-label">Aurora · Premium</div>
 
   <div id="toast" class="toast">
     <svg viewBox="0 0 24 24" fill="none" stroke="#FFD42A" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
@@ -368,59 +379,22 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
 <script>
 function $(s){return document.querySelector(s)}
 function $$(s){return document.querySelectorAll(s)}
-
-function show(id){
-  $$('.screen').forEach(s=>s.classList.remove('active'));
-  $('#'+id).classList.add('active');
-  if(navigator.vibrate)navigator.vibrate(10)
-}
+function show(id){$$('.screen').forEach(s=>s.classList.remove('active'));$('#'+id).classList.add('active');if(navigator.vibrate)navigator.vibrate(10)}
 function goMap(){show('screen-map')}
 function goDetail(){show('screen-detail')}
-
-function setChip(el){
-  $$('.chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  if(navigator.vibrate)navigator.vibrate(8)
+function setChip(el){$$('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');if(navigator.vibrate)navigator.vibrate(8)}
+function setZoom(mode){
+  const map=$('#map');const closeBtn=$('#zoom-close-btn');const farBtn=$('#zoom-far-btn');const scaleText=$('#scale-text');
+  if(mode==='far'){map.classList.add('zoomed-out');closeBtn.classList.remove('active');farBtn.classList.add('active');scaleText.textContent='5 km'}
+  else{map.classList.remove('zoomed-out');closeBtn.classList.add('active');farBtn.classList.remove('active');scaleText.textContent='2 km'}
+  if(navigator.vibrate)navigator.vibrate(10)
 }
-
 let toastTimer;
-function toast(text){
-  $('#toast-text').textContent=text;
-  $('#toast').classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),2200);
-  if(navigator.vibrate)navigator.vibrate(12)
-}
-
-// Synthétiseur ding cristallin (Do-Mi-Sol) via Web Audio
+function toast(text){$('#toast-text').textContent=text;$('#toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),2200);if(navigator.vibrate)navigator.vibrate(12)}
 let audioCtx=null;
-function ding(){
-  try{
-    if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-    if(audioCtx.state==='suspended')audioCtx.resume();
-    const t0=audioCtx.currentTime;
-    const notes=[523.25,659.25,783.99]; // Do-Mi-Sol
-    notes.forEach((f,i)=>{
-      const o=audioCtx.createOscillator();
-      const g=audioCtx.createGain();
-      o.type='sine';o.frequency.value=f;
-      g.gain.setValueAtTime(0,t0+i*0.10);
-      g.gain.linearRampToValueAtTime(0.18,t0+i*0.10+0.01);
-      g.gain.exponentialRampToValueAtTime(0.001,t0+i*0.10+0.55);
-      o.connect(g).connect(audioCtx.destination);
-      o.start(t0+i*0.10);o.stop(t0+i*0.10+0.6)
-    })
-  }catch(e){}
-}
-
-function onYAller(){
-  toast('Ouverture Waze · 2,1 km');
-  ding();
-}
-function onSignal(){
-  toast('Signalement envoyé · merci !');
-  ding();
-}
+function ding(){try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const t0=audioCtx.currentTime;[523.25,659.25,783.99].forEach((f,i)=>{const o=audioCtx.createOscillator();const g=audioCtx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t0+i*0.10);g.gain.linearRampToValueAtTime(0.18,t0+i*0.10+0.01);g.gain.exponentialRampToValueAtTime(0.001,t0+i*0.10+0.55);o.connect(g).connect(audioCtx.destination);o.start(t0+i*0.10);o.stop(t0+i*0.10+0.6)})}catch(e){}}
+function onYAller(){toast('Ouverture Waze · 2,1 km');ding()}
+function onSignal(){toast('Signalement envoyé · merci !');ding()}
 </script>
 </body>
 </html>

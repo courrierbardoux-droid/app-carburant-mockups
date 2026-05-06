@@ -77,6 +77,32 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
 @keyframes rise{0%{transform:translateY(110vh) scale(.5);opacity:0}10%{opacity:.6}90%{opacity:.5}100%{transform:translateY(-10vh) scale(1.2);opacity:0}}
 
 .screens{position:relative;width:100%;height:100%;z-index:2}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateX(20px);transition:opacity .35s ease,transform .35s ease,visibility .35s}
+.screen.active{opacity:1;visibility:visible;transform:translateX(0)}
+
+#screen-detail .topbar{padding-top:max(18px,env(safe-area-inset-top))}
+.back-btn{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:var(--text-soft);cursor:pointer;padding:10px 0}
+.back-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2}
+.detail-body{flex:1;overflow-y:auto;padding:0 22px 24px}
+.detail-hero{margin:8px 0 18px;padding:18px;background:linear-gradient(160deg,rgba(255,107,53,.14) 0%,rgba(255,212,42,.04) 100%);border:1px solid rgba(255,107,53,.20);border-radius:24px}
+.detail-hero h1{font-family:'DM Sans',sans-serif;font-size:24px;font-weight:900;letter-spacing:-.02em;margin-bottom:6px;line-height:1.15}
+.detail-hero h1 span{background:linear-gradient(135deg,var(--action-bright),var(--action));-webkit-background-clip:text;background-clip:text;color:transparent}
+.detail-hero .addr{color:var(--text-soft);font-size:13px;display:flex;align-items:center;gap:6px}
+.detail-hero .addr svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.2}
+.section-title{font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--text-soft);margin:18px 0 10px}
+.detail-prices{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.dp{background:var(--glass);border:1px solid var(--border);border-radius:18px;padding:14px}
+.dp-row{display:flex;justify-content:space-between;align-items:center}
+.dp-label{font-size:13px;color:var(--text-soft);font-weight:500}
+.dp-val{font-family:'DM Sans',sans-serif;font-weight:900;font-size:20px;color:var(--action-bright);letter-spacing:-.02em}
+.dp.rupture .dp-val{color:var(--red);text-decoration:line-through}
+.dp .delta{font-size:11px;color:var(--green);font-weight:600;margin-top:2px;font-family:'Space Grotesk',sans-serif}
+.dp.rupture .delta{color:var(--red)}
+.services{display:flex;flex-wrap:wrap;gap:8px}
+.service{padding:8px 12px;background:var(--glass);border:1px solid var(--border);border-radius:100px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:6px}
+.service svg{width:13px;height:13px;fill:none;stroke:var(--action-bright);stroke-width:2.2}
+.cta-row{display:grid;grid-template-columns:1fr;gap:10px;margin-top:24px}
+.cta-row .btn{padding:18px;font-size:15px}
 
 /* Top bar */
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 22px 12px;padding-top:max(18px,env(safe-area-inset-top));z-index:3;position:relative}
@@ -272,8 +298,8 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
     <span class="particle"></span><span class="particle"></span><span class="particle"></span>
   </div>
 
-  <!-- ÉCRAN MAP -->
-  <section class="screens">
+  <div class="screens">
+    <section id="screen-map" class="screen active">
     <div class="topbar">
       <div class="brand">
         <div class="logo-wrap">
@@ -397,7 +423,7 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
         <div class="queue-text"><b>Pas de queue · pompes OK</b><small>il y a 8 min · 2 utilisateurs</small></div>
       </div>
       <div class="actions">
-        <button class="btn ghost" onclick="toast('Détails ouverts')">
+        <button class="btn ghost" onclick="goDetail()">
           <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
           Détails
         </button>
@@ -407,9 +433,61 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
         </button>
       </div>
     </div>
-  </section>
+    </section>
 
-  <div class="dir-label">Aurora × Vibrant · MIX</div>
+    <section id="screen-detail" class="screen">
+      <div class="topbar">
+        <div class="back-btn" onclick="goMap()">
+          <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+          Carte
+        </div>
+        <div class="icon-btn" onclick="toast('Ajouté aux favoris')">
+          <svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M19 14c1.5-1.5 3-4 3-6.5a4.5 4.5 0 0 0-9 0A4.5 4.5 0 0 0 4 7.5C4 10 5.5 12.5 7 14l5 5 7-5z"/></svg>
+        </div>
+      </div>
+      <div class="detail-body">
+        <div class="detail-hero">
+          <h1>Total Châtellerault <span>Sud</span></h1>
+          <div class="addr">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-7.5 8-13a8 8 0 0 0-16 0c0 5.5 8 13 8 13z"/><circle cx="12" cy="9" r="3"/></svg>
+            14 av. de Bordeaux · 86100 · 2,1 km
+          </div>
+        </div>
+        <div class="section-title">Prix carburants</div>
+        <div class="detail-prices">
+          <div class="dp"><div class="dp-row"><span class="dp-label">SP95</span><span class="dp-val">1,72€</span></div><div class="delta">−3 cts vs moyenne</div></div>
+          <div class="dp"><div class="dp-row"><span class="dp-label">SP98</span><span class="dp-val">1,79€</span></div><div class="delta">−2 cts</div></div>
+          <div class="dp"><div class="dp-row"><span class="dp-label">Gazole</span><span class="dp-val">1,68€</span></div><div class="delta">−4 cts</div></div>
+          <div class="dp rupture"><div class="dp-row"><span class="dp-label">E85</span><span class="dp-val">1,02€</span></div><div class="delta">en rupture · 2 j</div></div>
+        </div>
+        <div class="section-title">Services & paiement</div>
+        <div class="services">
+          <div class="service"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>CB</div>
+          <div class="service"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>Ticket-resto</div>
+          <div class="service"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>Boutique</div>
+          <div class="service"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg>Lavage</div>
+          <div class="service"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>24h/24</div>
+        </div>
+        <div class="section-title">Crowdsourcing — temps réel</div>
+        <div class="queue-bar">
+          <div class="queue-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <div class="queue-text"><b>Pas de queue · pompes OK</b><small>2 utilisateurs il y a 8 minutes</small></div>
+        </div>
+        <div class="cta-row">
+          <button class="btn primary" onclick="onYAller()">
+            <svg viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg>
+            Y aller — Waze ou Google Maps
+          </button>
+          <button class="btn ghost" onclick="onSignal()">
+            <svg viewBox="0 0 24 24"><path d="M12 2v6m0 8v6m10-10h-6M8 12H2"/></svg>
+            Signaler une queue ou rupture
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="dir-label">Aurora × Vibrant · MIX (défaut)</div>
 
   <div id="toast" class="toast">
     <svg viewBox="0 0 24 24" fill="none" stroke="#FFD60A" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
@@ -420,6 +498,11 @@ body{position:relative;width:100vw;height:100dvh;display:grid;place-items:center
 <script>
 function $(s){return document.querySelector(s)}
 function $$(s){return document.querySelectorAll(s)}
+
+function show(id){$$('.screen').forEach(s=>s.classList.remove('active'));$('#'+id).classList.add('active');if(navigator.vibrate)navigator.vibrate(10)}
+function goMap(){show('screen-map')}
+function goDetail(){show('screen-detail')}
+function onSignal(){toast('Signalement envoyé · merci !');ding()}
 
 function setChip(el){
   $$('.chip').forEach(c=>c.classList.remove('active'));
