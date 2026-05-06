@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0B1B2E">
-<meta name="description" content="Carburant FR — Signale la queue, vois la queue. App mobile pour éviter ruptures et files d'attente aux pompes en France. Gratuit, données officielles + crowdsourcing temps réel.">
-<title>Carburant FR — Signale la queue, vois la queue</title>
+<meta name="description" content="Carburant FR — Pas de file d'attente, pas de cuve vide. App mobile pour éviter ruptures et files d'attente aux pompes en France. Gratuit, données officielles + crowdsourcing temps réel.">
+<title>Carburant FR — Pas de file d'attente, pas de cuve vide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;900&family=Space+Grotesk:wght@500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -140,17 +140,19 @@ h3{font-size:22px;font-weight:700;margin-bottom:10px;line-height:1.25}
 .ph-chip{padding:6px 11px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:100px;font-size:10px;font-weight:600;color:var(--text);white-space:nowrap}
 .ph-chip.active{background:linear-gradient(135deg,var(--gold),var(--action));color:#0B1B2E;border-color:transparent;font-weight:700;box-shadow:0 4px 14px -2px rgba(255,107,53,.4)}
 .ph-map{flex:1;background:rgba(11,27,46,.4);border-radius:18px;position:relative;overflow:hidden;margin-bottom:12px;border:1px solid rgba(255,255,255,.05)}
-.ph-pin{position:absolute;width:32px;height:32px;border-radius:12px;display:grid;place-items:center;font-size:14px;color:#fff;font-family:'DM Sans',sans-serif;font-weight:700;box-shadow:0 6px 14px rgba(0,0,0,.4)}
-.ph-pin::before{content:"";position:absolute;inset:-3px;border-radius:14px;background:inherit;opacity:.3;animation:ph-pulse 2s ease-out infinite;z-index:-1}
+.ph-pin{position:absolute;width:24px;height:24px;border-radius:9px;display:grid;place-items:center;font-size:11px;color:#fff;font-family:'DM Sans',sans-serif;font-weight:700;box-shadow:0 4px 10px rgba(0,0,0,.4)}
+.ph-pin::before{content:"";position:absolute;inset:-2px;border-radius:11px;background:inherit;opacity:.3;animation:ph-pulse 2s ease-out infinite;z-index:-1}
 @keyframes ph-pulse{0%{transform:scale(1);opacity:.4}100%{transform:scale(1.5);opacity:0}}
-.ph-pin.green{background:linear-gradient(135deg,var(--green),#2BA055);top:30%;left:18%}
-.ph-pin.green::after{content:"⛽";font-size:13px}
-.ph-pin.gold{background:linear-gradient(135deg,var(--gold),var(--action));top:50%;left:55%;color:#0B1B2E}
-.ph-pin.gold::after{content:"⛽";font-size:13px}
-.ph-pin.red{background:linear-gradient(135deg,var(--red),#D63B40);top:68%;left:28%}
-.ph-pin.red::after{content:"⛽";font-size:13px;opacity:.6}
-.ph-pin.green2{background:linear-gradient(135deg,var(--green),#2BA055);top:38%;left:74%}
-.ph-pin.green2::after{content:"⛽";font-size:13px}
+.ph-pin.green{background:linear-gradient(135deg,var(--green),#2BA055);top:28%;left:16%}
+.ph-pin.green::after{content:"⛽";font-size:10px}
+.ph-pin.gold{background:linear-gradient(135deg,var(--gold),var(--action));top:48%;left:54%;color:#0B1B2E}
+.ph-pin.gold::after{content:"⛽";font-size:10px}
+.ph-pin.red{background:linear-gradient(135deg,var(--red),#D63B40);top:66%;left:26%}
+.ph-pin.red::after{content:"⛽";font-size:10px;opacity:.6}
+.ph-pin.green2{background:linear-gradient(135deg,var(--green),#2BA055);top:36%;left:72%}
+.ph-pin.green2::after{content:"⛽";font-size:10px}
+.ph-status{position:absolute;top:12%;left:50%;transform:translateX(-50%);background:rgba(63,203,111,.18);color:var(--green);padding:4px 10px;border-radius:100px;font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:1px solid rgba(63,203,111,.4);font-family:'Space Grotesk',sans-serif;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);white-space:nowrap}
+.ph-status::before{content:"";display:inline-block;width:5px;height:5px;background:var(--green);border-radius:50%;margin-right:5px;box-shadow:0 0 6px var(--green);vertical-align:middle}
 .ph-user{position:absolute;top:48%;left:48%;width:14px;height:14px;border-radius:50%;background:#5B8DEF;border:3px solid #fff;box-shadow:0 0 0 5px rgba(91,141,239,.25),0 0 18px rgba(91,141,239,.5)}
 .ph-sheet{background:rgba(255,255,255,.06);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.10);border-radius:20px;padding:14px}
 .ph-sheet-title{font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
@@ -275,8 +277,8 @@ footer{margin-top:60px;background:rgba(6,16,29,.8);backdrop-filter:blur(20px);bo
   <section id="hero">
     <div>
       <span class="eyebrow">🇫🇷 Données officielles + temps réel</span>
-      <h1>Signale la queue,<br><span class="gradient-text">vois la queue.</span></h1>
-      <p class="subtitle">L'app mobile pour ne plus jamais tomber sur une pompe à sec ou faire la queue 25 minutes pour 5 € d'écart. Prix officiels du gouvernement, signalements en temps réel par les autres conducteurs.</p>
+      <h1>Pas de file d'attente,<br><span class="gradient-text">pas de cuve vide.</span></h1>
+      <p class="subtitle">L'app mobile pour ne plus jamais tomber sur une pompe à sec ou perdre 25 minutes en file d'attente pour 5 € d'écart. Prix officiels du gouvernement, signalements en temps réel par les autres conducteurs.</p>
       <div class="hero-cta-row">
         <a href="#download" class="btn btn-primary">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5V3.5c0-.6.7-.9 1.1-.5l16 8.5c.4.2.4.8 0 1L4.1 21c-.4.2-1.1-.1-1.1-.5z"/></svg>
@@ -290,7 +292,7 @@ footer{margin-top:60px;background:rgba(6,16,29,.8);backdrop-filter:blur(20px);bo
       <div class="hero-meta">
         <div class="hero-meta-item">
           <svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
-          Gratuit, sans inscription
+          Gratuit découverte, sans inscription
         </div>
         <div class="hero-meta-item">
           <svg viewBox="0 0 24 24" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
@@ -321,6 +323,7 @@ footer{margin-top:60px;background:rgba(6,16,29,.8);backdrop-filter:blur(20px);bo
             <div class="ph-chip">Gazole</div>
           </div>
           <div class="ph-map">
+            <div class="ph-status">Pas de file d'attente</div>
             <div class="ph-pin green"></div>
             <div class="ph-pin gold"></div>
             <div class="ph-pin red"></div>
@@ -359,13 +362,13 @@ footer{margin-top:60px;background:rgba(6,16,29,.8);backdrop-filter:blur(20px);bo
       </div>
       <div class="step-card reveal">
         <span class="step-num">02</span>
-        <h3>Tu vois ton plein</h3>
-        <p>Sur chaque station, le coût estimé de ton plein selon TA voiture personnelle. Plus de calcul mental — « ce plein te coûtera 78 € » s'affiche directement.</p>
+        <h3>Tu vois le coût de ton plein</h3>
+        <p>Sur chaque station, le coût estimé selon TA voiture personnelle. « Ce plein te coûtera 78 € » s'affiche directement, mis à jour en temps réel.</p>
       </div>
       <div class="step-card reveal">
         <span class="step-num">03</span>
-        <h3>Tu signales et tu y vas</h3>
-        <p>Tu signales la queue ou la rupture pour aider les autres. Tu cliques sur « Y aller », ça ouvre Waze ou Google Maps avec l'itinéraire vers la station choisie.</p>
+        <h3>Tu y vas, tu signales</h3>
+        <p>Tu cliques sur « Y aller », l'itinéraire s'ouvre dans Waze ou Google Maps. Une fois sur place, tu signales la file d'attente, le montant maxi autorisé en cas de pénurie, ou la cuve vide pour aider les conducteurs suivants.</p>
       </div>
     </div>
   </section>
@@ -386,22 +389,22 @@ footer{margin-top:60px;background:rgba(6,16,29,.8);backdrop-filter:blur(20px);bo
       <div class="feature reveal">
         <div class="feature-icon">⛽</div>
         <h3>Coût du plein personnalisé</h3>
-        <p>Tu renseignes ta voiture en 30 secondes (marque, réservoir, conso). L'app affiche le coût estimé de ton plein sur chaque station — plus aucun calcul mental.</p>
+        <p>Tu renseignes ta voiture en 30 secondes (marque, réservoir, conso). Tu vois le prix de ton plein immédiatement sur chaque station, mis à jour en temps réel.</p>
       </div>
       <div class="feature reveal">
         <div class="feature-icon">🚦</div>
-        <h3>Signaler la queue</h3>
-        <p>Bouton « Signaler une queue de X minutes » et « Signaler une pompe en panne ». Les autres conducteurs voient les signalements horodatés dans les 10 secondes.</p>
+        <h3>Signaler la file d'attente</h3>
+        <p>Boutons « File d'attente de X minutes », « Pompe en panne », « Cuve vide » et « Montant maxi autorisé » (utile en pénurie). Les autres conducteurs voient les signalements horodatés dans les 10 secondes.</p>
       </div>
       <div class="feature reveal">
         <div class="feature-icon">🎯</div>
         <h3>Filtres intelligents</h3>
-        <p>Filtre par carburant, paiement (CB, ticket-resto, cartes flotte), services (boutique, lavage, DAB, 24h/24), état (en service, sans queue récente).</p>
+        <p>Filtre par carburant, paiement (CB, ticket-resto, cartes flotte), services (boutique, lavage, DAB, 24h/24), horaires d'ouverture, état (en service, sans file d'attente récente).</p>
       </div>
       <div class="feature reveal">
         <div class="feature-icon">🚗</div>
         <h3>Bouton « Y aller »</h3>
-        <p>Sur chaque station, un bouton qui ouvre directement Waze ou Google Maps avec l'itinéraire calculé. Plus besoin de recopier l'adresse à la main.</p>
+        <p>Sur chaque station, un bouton qui ouvre directement Waze ou Google Maps avec l'itinéraire calculé vers la pompe.</p>
       </div>
       <div class="feature reveal">
         <div class="feature-icon">🎨</div>
@@ -428,7 +431,11 @@ footer{margin-top:60px;background:rgba(6,16,29,.8);backdrop-filter:blur(20px);bo
           </div>
           <div class="pro-item">
             <div class="pro-check"></div>
-            <p><b>Phase 2</b> — Filtres combinés (SP95 + boutique ouverte + sans queue) et profils sauvegardés</p>
+            <p><b>Phase 2</b> — Filtres combinés (SP95 + boutique ouverte + sans file) et profils sauvegardés</p>
+          </div>
+          <div class="pro-item">
+            <div class="pro-check"></div>
+            <p><b>Phase 2</b> — Bandeau horizontal défilant style compteur : tes 3 stations favorites visibles en permanence, triées de la moins chère à gauche à la plus chère à droite</p>
           </div>
           <div class="pro-item">
             <div class="pro-check"></div>
@@ -486,7 +493,7 @@ footer{margin-top:60px;background:rgba(6,16,29,.8);backdrop-filter:blur(20px);bo
         <button class="faq-q" aria-expanded="false">Le lien dans le SMS est-il dangereux ?</button>
         <div class="faq-a">
           <p>Le lien renvoie vers <strong>cette page</strong> ou directement vers la fiche officielle de Carburant FR sur le Play Store ou l'App Store. Ce sont les seuls magasins d'applications où l'app est disponible.</p>
-          <p><strong>Vérification simple :</strong> ouvre Play Store ou App Store, cherche « Carburant FR Signale la queue » manuellement. Si tu trouves la même app, le lien est légitime. Tu n'es jamais obligé(e) de cliquer sur un lien que tu ne reconnais pas.</p>
+          <p><strong>Vérification simple :</strong> ouvre Play Store ou App Store, cherche « Carburant FR file d'attente » manuellement. Si tu trouves la même app, le lien est légitime. Tu n'es jamais obligé(e) de cliquer sur un lien que tu ne reconnais pas.</p>
         </div>
       </div>
       <div class="faq reveal">
@@ -539,7 +546,7 @@ footer{margin-top:60px;background:rgba(6,16,29,.8);backdrop-filter:blur(20px);bo
       <div class="privacy-card reveal">
         <div class="privacy-card-icon">📊</div>
         <h3>Signalements crowdsourcing</h3>
-        <p>Tes signalements de queue et rupture sont publics et anonymisés (un identifiant aléatoire, pas ton identité). Les autres utilisateurs voient seulement « il y a 8 minutes par 2 utilisateurs ».</p>
+        <p>Tes signalements de file d'attente et rupture sont publics et anonymisés (un identifiant aléatoire, pas ton identité). Les autres utilisateurs voient seulement « il y a 8 minutes par 2 utilisateurs ».</p>
       </div>
       <div class="privacy-card reveal">
         <div class="privacy-card-icon">🚫</div>
